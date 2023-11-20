@@ -1,0 +1,35 @@
+#cuerpo{
+
+    background: rgb(214, 225, 223);
+    }
+#centrar{
+
+    border-style: solid;
+    border-radius: 20px;
+
+    text-align: center;
+    width: 200px;
+    position: absolute;
+    left: 50%;
+
+    transform: translate( -49%);
+
+}
+
+#Title{text-align: center;
+    font-size: 200%;
+    font-style: italic;}
+
+
+.requisitos_formu{
+    border-radius: 20px;
+    margin-bottom: 15px;
+    font-style: italic;
+
+
+}
+#bad_entry{
+    color: red;
+    text-align: center;
+
+}

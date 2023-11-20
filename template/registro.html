@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/resources/login_style.css">
+</head>
+<body id="cuerpo">
+
+<div id="centrar">
+    <h1 id="Title">Registro</h1>
+    <form action="/manejo/" method="POST">
+        <p> <label class="requisitos_formu"> Nombre: <input type="text" name="nombre" > </label></p>
+        <p> <label class="requisitos_formu"> Password: <input type="password" name="password" > </label></p>
+        <p> <label class="requisitos_formu"> Password Confir: <input type="password" name="password_confirmacion" > </label></p>
+        <p> <label class="requisitos_formu"> Edad: <input type="number" name="edad" max="100" min="1"> </label></p>
+        <p><button class="requisitos_formu">  Enviar</button></p>
+    </form>
+    <div id="bad_entry">
+        <p>{{.mensaje}}</p>
+    </div>
+
+</div>
+
+</body>
+</html>
