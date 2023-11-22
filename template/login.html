@@ -8,12 +8,15 @@
 <body>
     <div id="centrar">
         <h1 id="Title">Biendvenido</h1>
-        <form action="#" method="POST">
+        <form action="/lOGEARSE/" method="POST">
             <p> <label class="requisitos_formu"> Nombre: <input type="text" name="nombre" > </label></p>
             <p> <label class="requisitos_formu"> Password: <input type="password" name="password" > </label></p>
             <p> <label class="requisitos_formu"><a href="/Registro/">Registro</a> </label></p>
             <p><button class="requisitos_formu">  Enviar</button></p>
         </form>
+        <div id="bad_entry">
+            <p>{{.mensaje}}</p>
+        </div>
     </div>
 </body>
 </html>

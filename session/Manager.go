@@ -1,21 +1,68 @@
 package session
 
 import (
-	"fmt"
+	"crypto/rand"
+	"encoding/base64"
+	"io"
+	"net/http"
 	"sync"
 )
 
 type Manager struct {
 	CookieName  string
 	lock        sync.Mutex
-	provider    Provider
-	maxlifetime int64
+	Maxlifetime int64
 }
 
-func NewManager(provideName string, cookieName string, maxlifetime int64) (*Manager, error) {
-	provider, ok := provides[provideName]
-	if !ok {
-		return nil, fmt.Errorf("session: unknown provide %q (forgotten import?)", provideName)
+func NewManager(ckname string, maxlt int64) *Manager {
+	return &Manager{
+		CookieName:  ckname,
+		Maxlifetime: maxlt,
 	}
-	return &Manager{provider: provider, CookieName: cookieName, maxlifetime: maxlifetime}, nil
+
+}
+
+func (m *Manager) SessionID() string {
+	code := make([]byte, 32)
+	io.ReadFull(rand.Reader, code)
+
+	return base64.URLEncoding.EncodeToString(code)
+
+}
+func (m *Manager) BuscarCookie(r *http.Request) string {
+
+	cookie, err := r.Cookie(m.CookieName)
+	if err != nil {
+		return ""
+	}
+	return cookie.Value
+}
+
+func (m *Manager) CrearCookie(w http.ResponseWriter, r *http.Request) {
+	m.lock.Lock()
+	defer m.lock.Unlock()
+	_, err := r.Cookie(m.CookieName)
+	if err != nil {
+		Cookie := &http.Cookie{
+			Name:   m.CookieName,
+			Value:  m.SessionID(),
+			Path:   "/",
+			MaxAge: int(m.Maxlifetime),
+		}
+		http.SetCookie(w, Cookie)
+	}
+}
+func (m *Manager) EliminarCookie(w http.ResponseWriter, r *http.Request) {
+	m.lock.Lock()
+	defer m.lock.Unlock()
+	_, err := r.Cookie(m.CookieName)
+	if err == nil {
+		Cookie := &http.Cookie{
+			Name:   m.CookieName,
+			Path:   "/",
+			Value:  "cambie",
+			MaxAge: -1,
+		}
+		http.SetCookie(w, Cookie)
+	}
 }

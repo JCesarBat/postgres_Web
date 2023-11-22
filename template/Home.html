@@ -7,11 +7,15 @@
 </head>
 <body>
     <header>
-        <h1>Bienvenido  </h1>
+        <h1>Bienvenido {{.usuario.Nombre}} </h1>
         <nav>
             <label><a class="navegador" href="#"> uno</a></label>
             <label><a class="navegador" href="#"> dos</a></label>
+            {{if .usuario}}
+            <label><a class="navegador" href="/Cerrar/"> Cerrar Session</a></label>
+            {{else}}
             <label><a class="navegador" href="/login/"> Logearse</a></label>
+            {{end}}
         </nav>
     </header>
 
