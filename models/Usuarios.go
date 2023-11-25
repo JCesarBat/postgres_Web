@@ -17,9 +17,10 @@ type Usuario struct {
 }
 
 func Usuario_save(user Usuario) (*Usuario, error) {
+
 	result := db.DB.Create(&user)
 	if result.Error != nil {
-		log.Fatal("ocurrio un error al ingresar datos")
+		return &user, result.Error
 	}
 
 	return &user, nil
